@@ -15,11 +15,9 @@ public class AppointmentGenerator {
         for (int day = 1; day < numOfDays + 1; day++) {
             resetCalendar();
 
-            for (int hour = 1; hour <= 14; hour++) {
+            for (int hour = 1; hour < 14; hour++) {
                 int numOfPersons = new Random().nextInt(5);
-                if(hour == 14){
-                    numOfPersons = 1;
-                }
+
                 createAppointmentForHour(numOfPersons);
                 changeHours();
 
