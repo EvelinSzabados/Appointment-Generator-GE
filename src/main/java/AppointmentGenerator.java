@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.sql.SQLException;
+import java.util.*;
 
 public class AppointmentGenerator {
     private Calendar calendar = new GregorianCalendar();
@@ -12,13 +10,13 @@ public class AppointmentGenerator {
         //Appointments can only be booked from tomorrow
         calendar.add(Calendar.DAY_OF_MONTH,1);
     }
-    public void createAppointment(int numOfDays) {
+    public void createAppointment(int numOfDays) throws SQLException {
 
         for (int day = 1; day < numOfDays + 1; day++) {
             resetCalendar();
 
             for (int hour = 1; hour <= 14; hour++) {
-                int numOfPersons = 4;
+                int numOfPersons = new Random().nextInt(5);
                 if(hour == 14){
                     numOfPersons = 1;
                 }
@@ -30,11 +28,6 @@ public class AppointmentGenerator {
         }
     }
 
-    public void listAppointments(){
-        for(String s: appointments){
-            System.out.println(s);
-        }
-    }
 
     private void resetCalendar() {
         calendar.set(Calendar.HOUR_OF_DAY, 7);
@@ -56,14 +49,16 @@ public class AppointmentGenerator {
         calendar.add(Calendar.DAY_OF_MONTH, 1);
     }
 
-    private void createAppointmentForHour(int numOfPersons) {
+    private void createAppointmentForHour(int numOfPersons) throws SQLException {
 
         if(numOfPersons > 0){
-            appointments.add(NameGenerator.generateName()[0] + " " + appointmentsCalendar.getTime());
+            WriteToDatabase.writeAppointmentToDatabase(NameGenerator.generateName(),appointmentsCalendar.getTime());
+
             if(numOfPersons > 1){
                 for(int i = 1; i < numOfPersons;i++){
                     appointmentsCalendar.add(Calendar.MINUTE,60/numOfPersons);
-                    appointments.add(NameGenerator.generateName()[0] + " " + appointmentsCalendar.getTime());
+                    WriteToDatabase.writeAppointmentToDatabase(NameGenerator.generateName(),appointmentsCalendar.getTime());
+
                 }
                 resetHoursForAppointments();
             }
