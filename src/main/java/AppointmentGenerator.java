@@ -20,7 +20,7 @@ public class AppointmentGenerator {
                 int numOfPersons = new Random().nextInt(5);
 
                 createAppointmentForHour(numOfPersons);
-                changeHours();
+                incrementHours();
 
             }
             incrementDay();
@@ -41,7 +41,7 @@ public class AppointmentGenerator {
         appointmentsCalendar.set(Calendar.MILLISECOND, 0);
     }
 
-    private void changeHours() {
+    private void incrementHours() {
         calendar.add(Calendar.HOUR, 1);
     }
 
