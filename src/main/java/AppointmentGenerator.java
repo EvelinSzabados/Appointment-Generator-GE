@@ -4,7 +4,6 @@ import java.util.*;
 public class AppointmentGenerator {
     private Calendar calendar = new GregorianCalendar();
     private Calendar appointmentsCalendar = calendar;
-    private List<String> appointments = new ArrayList<String>();
 
     public AppointmentGenerator() {
         //Appointments can only be booked from tomorrow
@@ -21,7 +20,6 @@ public class AppointmentGenerator {
 
                 createAppointmentForHour(numOfPersons);
                 incrementHours();
-
             }
             incrementDay();
         }
@@ -50,8 +48,6 @@ public class AppointmentGenerator {
             calendar.add(Calendar.DAY_OF_MONTH, 3);
         } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
             calendar.add(Calendar.DAY_OF_MONTH, 2);
-        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
         } else {
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
@@ -67,7 +63,6 @@ public class AppointmentGenerator {
                 for (int i = 1; i < numOfPersons; i++) {
                     appointmentsCalendar.add(Calendar.MINUTE, 60 / numOfPersons);
                     WriteToDatabase.writeAppointmentToDatabase(NameGenerator.generateName(), appointmentsCalendar.getTime());
-
                 }
                 resetHoursForAppointments();
             }
